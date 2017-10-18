@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Domainesia Final Round</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style type="text/css">
+    .bg-images{
+       background-image      : url('./bg.jpg');
+       background-repeat     : no-repeat;
+       background-attachment : fixed;
+       background-position   : center;
+       width                 : 100%;
+       height                : 100%;
+       z-index               : 1;
+       position              : fixed;
+       top                   : 0;
+       left                  : 0;
+       -webkit-filter        : blur(2px);
+       -moz-filter           : blur(2px);
+       -o-filter             : blur(2px);
+       -ms-filter            : blur(2px);
+       filter                : blur(2px);
+    }
+    .container-fluid{
+      position   : relative;
+      width      : 48%;
+      padding    : 0 2% 2% 2%;
+      margin-top : 10%;
+      z-index    : 2;
+    }
+    .container-data{
+      color:#fff;
+    }
+    .info{
+    margin: 5px 0;
+    }
+    .foto{
+      border-radius    : 100%;
+      padding          : 2px;
+      background-color : #ddd;
+    }
+    .border-default{
+      border:solid 6px #fff;
+    }
+    .borderRed{
+    border-color:#f00;
+    }
+    .borderBlue{
+    border-color:#17a2b8;
+    }
+    .hlabel{
+      margin: 10px 0 5px 0 ;
+      padding:0;
+
+    }
+    #bio{
+     font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+<div class="bg-images"></div>
+<div class="container-fluid" align="center">
+  <div class="container-data">
+    <img src="http://enadcity.org/enadcity/wp-content/uploads/2017/02/profile-pictures.png" class="border-default foto" width="240" height="240" id="foto" />
+    <h3 class="hlabel"> <span id="nama">Loading..</span> | <span id="umur">0 </span> Years Old</h3>
+    <h4 class="hlabel text-capitalize" id="emailnya">Loading..</h4>
+    <h4 class="hlabel text-capitalize" id="bio">Loading..</h4>
+  </div>
+  <div class="info" id="info"></div>
+</div>
+<script type="text/javascript">
+ 
+  function hAlert(type='info', txt=''){
+    return '<div class="alert alert-'+type+'" role="alert">'+txt+'</div>';
+  }
+  
+  function buttonKembali(houtput){
+    return '<br/><button type="button"  data-loading-text="Loading..." onclick="getItBack(\''+houtput+'\')" class="btn btn-primary" autocomplete="off">Kembali</button>'
+  }
+  
+  function checkSecretKey(jSonData){
+    if(typeof(jSonData) === 'string' ){
+      if(jSonData != '404'){
+        jSonData = JSON.parse(jSonData);
+        var aa   = jSonData['name'];
+        if(jSonData.hasOwnProperty("name")){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+      else{
+        return '404';
+      }
+    }
+    else if(typeof(jSonData) === 'object'){
+      if(jSonData.hasOwnProperty("name")){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      $('#info').html(hAlert('danger','Failed data respon!'));
+    }
+    
+  }
+  
+  $(function(){
+    $.ajax({
+      url      : './proses-data.php',
+      data     : {'fullname':'Muhammad Nur Ashri', 'email':'heloconia.ai@gmail.com'},
+      success  : function(res){
+        if(res != '404'){
+          var check = checkSecretKey(res);
+          if(check == true){
+            var new_respon = JSON.parse(res);
+            var umur       = parseInt(new_respon["age"]);
+            $("#foto").addClass(((umur % 2)== 1?'borderRed':'borderBlue'));
+            $("#foto").attr("src", new_respon["avatar"]);
+            $("#foto").css({width:new_respon["size"], height:new_respon["size"]});
+            $("#nama").html(new_respon["name"]);
+            $("#emailnya").html(new_respon["email"]);
+            $("#umur").html(new_respon["age"]);
+            $("#bio").html('"'+new_respon["bio"]+'"');
+          }
+          else{
+             $("#info").html(hAlert('danger','Oops, Failed to get data. Check your connection and try again later!')+res);
+          }
+        }
+        else{
+          $("#info").html(hAlert('danger','Oops, Error Format, Please contact your developer!'));
+        }
+      },
+      error: function(jqXHR, text, error){
+        $('#info').html(hAlert('danger','Failed to connect, Status 404!'));
+      }
+    });
+  }); 
+</script>
+<script src="./popper.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+</html>
