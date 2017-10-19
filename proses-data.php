@@ -10,6 +10,7 @@ function getProfile($name, $email) {
     'avatar' => $grav_url,
     'age'    => $age,
     'bio'    => "I do not like anything other than coding",
+    'size' => $size
   ];
 }
 
