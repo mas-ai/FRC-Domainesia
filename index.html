@@ -24,7 +24,6 @@
     }
     .container-fluid{
       position   : relative;
-      width      : 48%;
       padding    : 0 2% 2% 2%;
       margin-top : 10%;
       z-index    : 2;
@@ -75,10 +74,6 @@
  
   function hAlert(type='info', txt=''){
     return '<div class="alert alert-'+type+'" role="alert">'+txt+'</div>';
-  }
-  
-  function buttonKembali(houtput){
-    return '<br/><button type="button"  data-loading-text="Loading..." onclick="getItBack(\''+houtput+'\')" class="btn btn-primary" autocomplete="off">Kembali</button>'
   }
   
   function checkSecretKey(jSonData){
