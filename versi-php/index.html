@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Domainesia Final Round</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style type="text/css">
+    .bg-images{
+       background-image      : url('./../bg.jpg');
+       background-repeat     : no-repeat;
+       background-attachment : fixed;
+       background-position   : center;
+       width                 : 100%;
+       height                : 100%;
+       z-index               : 1;
+       position              : fixed;
+       top                   : 0;
+       left                  : 0;
+       -webkit-filter        : blur(2px);
+       -moz-filter           : blur(2px);
+       -o-filter             : blur(2px);
+       -ms-filter            : blur(2px);
+       filter                : blur(2px);
+    }
+    .container-fluid{
+      position   : relative;
+      padding    : 0 2% 2% 2%;
+      margin-top : 10%;
+      z-index    : 2;
+    }
+    .container-data{
+      color:#fff;
+    }
+    .foto{
+      border-radius    : 100%;
+      padding          : 2px;
+      background-color : #ddd;
+    }
+    .border-default{
+      border:solid 6px #fff;
+    }
+    .borderRed{
+    border-color:#f00;
+    }
+    .borderBlue{
+    border-color:#17a2b8;
+    }
+    .hlabel{
+      margin: 10px 0 5px 0 ;
+      padding:0;
+
+    }
+    #bio{
+     font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+<div class="bg-images"></div>
+<div class="container-fluid" align="center"  id="info">
+</div>
+<script type="text/javascript">
+ 
+  function hAlert(type='info', txt=''){
+    return '<div class="alert alert-'+type+'" role="alert">'+txt+'</div>';
+  }
+  $(function(){
+    $("#info").html(hAlert('info','Try to get Profile User, Please wait for a while...'));
+    $.ajax({
+      url      : './beta.php',
+      data     : {'fullname':'Muhammad Nur Ashri', 'email':'heloconia.ai@gmail.com'},
+      success  : function(res){
+       $("#info").html(res);
+      },
+      error: function(jqXHR, text, error){
+        $('#info').html(hAlert('danger','Failed to connect, Status 404!'));
+      }
+    });
+  }); 
+</script>
+<script src="./../popper.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+</html>
